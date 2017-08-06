@@ -21,7 +21,7 @@ set autoindent
 set backspace=indent,eol,start
 set complete-=i
 set smarttab
-
+colorscheme slate
 set nrformats-=octal
 
 if !has('nvim') && &ttimeoutlen == -1
