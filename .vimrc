@@ -23,6 +23,10 @@ set complete-=i
 set smarttab
 colorscheme slate
 set nrformats-=octal
+set number
+
+map ; :
+noremap ;; ;
 
 if !has('nvim') && &ttimeoutlen == -1
   set ttimeout
