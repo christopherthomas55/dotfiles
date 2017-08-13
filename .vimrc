@@ -1,87 +1,108 @@
-" sensible.vim - Defaults everyone can agree on
-" Maintainer:   Tim Pope <http://tpo.pe/>
-" Version:      1.1
+set nocompatible
+filetype off
+syntax enable
 
-if exists('g:loaded_sensible') || &compatible
-  finish
-else
-  let g:loaded_sensible = 'yes'
-endif
+"Vundle stuff - required for those plugins
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'scrooloose/nerdtree.git'
+Plugin 'python-mode/python-mode.git'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plugin 'vimwiki/vimwiki'
+Plugin 'morhetz/gruvbox'
 
-if has('autocmd')
-  filetype plugin indent on
-endif
-if has('syntax') && !exists('g:syntax_on')
-  syntax enable
-endif
+call vundle#end()
+filetype plugin indent on
 
-" Use :help 'option' to see the documentation for the given option.
+"let g:gruvbox_termcolors = 16
+set background=dark
+let g:gruvbox_italic=1
+colorscheme gruvbox
+
+let g:vimwiki_folding='syntax'
 
 set autoindent
 set backspace=indent,eol,start
 set complete-=i
 set smarttab
-colorscheme slate
 set nrformats-=octal
 set number
+set relativenumber
+set encoding=utf-8
 
+"Tabs are just spaces
+set expandtab
+
+"Trying out cursorline
+set cursorline 
+
+" No shift to commands
 map ; :
 noremap ;; ;
 
-if !has('nvim') && &ttimeoutlen == -1
-  set ttimeout
-  set ttimeoutlen=100
-endif
+" Enable code folding
+set foldmethod=indent
+set foldlevel=99
+nnoremap <space> za
+
+" For speed
+set lazyredraw
+
+"language specific tabbing and width constraints
+au BufNewFile,BufRead *.py
+    \set tabstop=4
+    \set softtabstop=4
+    \set shiftwidth=4
+    \set textwidth=79
+    \set fileformat=unix
+    \set colorcolumn=+1 
+    \let g:pymode = 1
+    \let g:pymode_syntax = 1
+
+highlight colorcolumn ctermbg=blue guibg=blue
+
+au BufNewFile,BufRead *.js, *.html, *.css
+    \set tabstop=2
+    \set softtabstop=2
+    \set shiftwidth=2
+
+
+"Move vertically even in long lines
+nnoremap j gj
+nnoremap k gk
+
+"Move through navigation panes easy
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+"Key Command to toggle NERDtree
+nnoremap <C-n> :NERDTreeToggle <Enter>
+
+au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match ErrorMsg /\s\+$/
+
+
+"Apprently give virtualenv support to YouCompleteMe
+
+py << EOF
+import os
+import sys
+if 'VIRTUAL_ENV' in os.environ:
+  project_base_dir = os.environ['VIRTUAL_ENV']
+  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+  execfile(activate_this, dict(__file__=activate_this))
+EOF
 
 set incsearch
-" Use <C-L> to clear the highlighting of :set hlsearch.
-if maparg('<C-L>', 'n') ==# ''
-  nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
-endif
 
 set laststatus=2
 set ruler
 set wildmenu
-
-if !&scrolloff
-  set scrolloff=1
-endif
-if !&sidescrolloff
-  set sidescrolloff=5
-endif
 set display+=lastline
-
-if &encoding ==# 'latin1' && has('gui_running')
-  set encoding=utf-8
-endif
-
-if &listchars ==# 'eol:$'
-  set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
-endif
-
-if v:version > 703 || v:version == 703 && has("patch541")
-  set formatoptions+=j " Delete comment character when joining commented lines
-endif
-
-if has('path_extra')
-  setglobal tags-=./tags tags-=./tags; tags^=./tags;
-endif
-
-if &shell =~# 'fish$' && (v:version < 704 || v:version == 704 && !has('patch276'))
-  set shell=/bin/bash
-endif
-
 set autoread
-
-if &history < 1000
-  set history=1000
-endif
-if &tabpagemax < 50
-  set tabpagemax=50
-endif
-if !empty(&viminfo)
-  set viminfo^=!
-endif
 set sessionoptions-=options
 
 " Allow color schemes to do bright colors without forcing bold.
@@ -89,14 +110,6 @@ if &t_Co == 8 && $TERM !~# '^linux\|^Eterm'
   set t_Co=16
 endif
 
-" Load matchit.vim, but only if the user hasn't installed a newer version.
-if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
-  runtime! macros/matchit.vim
-endif
-
 inoremap <C-U> <C-G>u<C-U>
-
-
-
 
 
