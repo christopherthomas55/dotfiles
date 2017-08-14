@@ -6,7 +6,7 @@ syntax enable
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'Valloric/YouCompleteMe'
+"Plugin 'Valloric/YouCompleteMe'
 Plugin 'scrooloose/nerdtree.git'
 Plugin 'python-mode/python-mode.git'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
@@ -17,11 +17,12 @@ call vundle#end()
 filetype plugin indent on
 
 "let g:gruvbox_termcolors = 16
-set background=dark
+"set term=screen-256color
 let g:gruvbox_italic=1
 colorscheme gruvbox
-
+set background=dark
 let g:vimwiki_folding='syntax'
+highlight link Operator GruvboxBlue
 
 set autoindent
 set backspace=indent,eol,start
@@ -60,8 +61,6 @@ au BufNewFile,BufRead *.py
     \set colorcolumn=+1 
     \let g:pymode = 1
     \let g:pymode_syntax = 1
-
-highlight colorcolumn ctermbg=blue guibg=blue
 
 au BufNewFile,BufRead *.js, *.html, *.css
     \set tabstop=2
