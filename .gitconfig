@@ -1,0 +1,14 @@
+[user]
+	email = christopherthomas55@gmail.com
+	name = Chris Thomas
+
+
+# From
+# https://stackoverflow.com/questions/1838873/visualizing-branch-topology-in-git/34467298#34467298
+#
+[alias]
+    s =  status -s -b
+    lg = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)'
+    lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'
+
+
