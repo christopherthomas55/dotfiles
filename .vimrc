@@ -113,7 +113,7 @@ au BufNewFile,BufRead *.py
     \ set shiftwidth=4 |
     \ set textwidth=79 |
     \ set fileformat=unix |
-    \ set colorcolumn=+1 |
+    \ set colorcolumn=100 |
     \ syntax on
 
 au BufNewFile,BufRead *.js,*.html,*.css
