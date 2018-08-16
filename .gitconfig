@@ -1,6 +1,6 @@
 [user]
-	email = christopherthomas55@gmail.com
-	name = Chris Thomas
+	email = cthomas@bazean.com
+	name = Chris
 
 
 # From
@@ -10,5 +10,19 @@
     s =  status -s -b
     lg = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)'
     lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'
+    lgp = log --first-parent
+
+    pus = push
+    psuh = push
+    pshu = push
+    ps = push
+    psh = push
+
+    pul = pull
+    plul = pull
+    pll = pull
+    pll= pull
+    pllu = pull
+    ull = pull
 
 
