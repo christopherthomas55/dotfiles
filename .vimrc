@@ -22,9 +22,12 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-fugitive'
 
 
+" ----- Jupyter plugins
+"Plugin 'szymonmaszke/vimpyter' "Unfortunately is vim 8 only
+
 " ----- Old -----
 "Plugin 'python-mode/python-mode.git'
-"Plugin 'vimwiki/vimwiki'
+Plugin 'vimwiki/vimwiki'
 call vundle#end()
 
 
@@ -49,6 +52,8 @@ set statusline+=%*
 let g:syntastic_mode_map = {'mode':'passive'}
 
 let g:syntastic_python_checkers = ['pylint'] ", 'pycodestyle']
+let g:syntastic_python_checkers = ['pylint'] ", 'pycodestyle']
+let g:syntastic_javascript_checkers = ['jslint'] ", 'pycodestyle']
 "let g:syntastic_cpp_checkers = ['clang_tidy', 'gcc']
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 0
@@ -113,7 +118,7 @@ au BufNewFile,BufRead *.py
     \ set shiftwidth=4 |
     \ set textwidth=79 |
     \ set fileformat=unix |
-    \ set colorcolumn=100 |
+    \ set colorcolumn=+1 |
     \ syntax on
 
 au BufNewFile,BufRead *.js,*.html,*.css

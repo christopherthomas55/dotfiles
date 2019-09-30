@@ -1,6 +1,6 @@
 [user]
-	email = cthomas@bazean.com
-	name = Chris
+	email = christopherthomas55@gmail.com
+	name = Chris Thomas
 
 
 # From
@@ -25,4 +25,12 @@
     pllu = pull
     ull = pull
 
+    checkcout=checkout
+    chekcout=checkout
+    checkout=checkout
 
+
+[commit]
+	template = /home/chris/.git_commit_msg.txt
+[push]
+	default = simple
