@@ -99,7 +99,6 @@ set lazyredraw
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
-set textwidth=79
 
 "Copied for c since I'm lazy
 au BufNewFile,BufRead *.c, *.cpp
