@@ -134,3 +134,4 @@ fi
 
 PATH="$HOME/cmd_line_utils/data-science-at-the-command-line/tools:$PATH"
 PATH="$HOME/.local/bin:$PATH"
+PATH="$PATH:/opt/nvim-linux-x86_64/bin"
