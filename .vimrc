@@ -21,7 +21,7 @@ Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-fugitive'
 
-
+Plugin 'rust-lang/rust.vim'
 " ----- Jupyter plugins
 "Plugin 'szymonmaszke/vimpyter' "Unfortunately is vim 8 only
 
