@@ -5,29 +5,50 @@ syntax enable
 "Vundle stuff - required for those plugins
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
+" ---- General plugins
+"Vundle is what I use for plugins even though I should probably do something more modern
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'Valloric/YouCompleteMe'
+"I love nerdtree for moving around files/directories
 Plugin 'scrooloose/nerdtree.git'
+"Vim surround is how I use the "i" to get a word from interior. I don't know
+"what else it does
 Plugin 'tpope/vim-surround'
+" This is deprecated and I need to get another syntax checker like ALE (or
+" LSPs?)
 Plugin 'vim-syntastic/syntastic'
 
 
-" ----- Apearance
-Plugin 'morhetz/gruvbox'
+Plugin 'rust-lang/rust.vim'
+" ----- Appearance
+"  Color
+"Plugin 'morhetz/gruvbox' but in neovim!
+Plugin 'ellisonleao/gruvbox.nvim'
+
+"  Bottom line thing
 Plugin 'itchyny/lightline.vim'
 
 " ----- Git plugins
+" Git in nerdtree
 Plugin 'Xuyuanp/nerdtree-git-plugin'
+" Git in side number things
 Plugin 'airblade/vim-gitgutter'
+" Gives access to the :Git command. I like the idea but normally just use tmux. Ha!
 Plugin 'tpope/vim-fugitive'
 
-Plugin 'rust-lang/rust.vim'
+
+
+" ----- Neovim lsp basic configs
+Plugin 'neovim/nvim-lspconfig'
+" Makes lsp colors look better
+Plugin 'folke/lsp-colors.nvim'
+
 " ----- Jupyter plugins
-"Plugin 'szymonmaszke/vimpyter' "Unfortunately is vim 8 only
+" Plugin 'szymonmaszke/vimpyter' "Unfortunately is vim 8 only
 
 " ----- Old -----
-"Plugin 'python-mode/python-mode.git'
-Plugin 'vimwiki/vimwiki'
+" Plugin 'python-mode/python-mode.git'
+" Plugin 'vimwiki/vimwiki'
+call vundle#end()
 call vundle#end()
 
 
@@ -143,19 +164,8 @@ nnoremap <C-n> :NERDTreeToggle <Enter>
 nnoremap ]l :lnext <Enter>
 nnoremap [l :lprevious <Enter>
 
+" I don't remember what this does
 au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match ErrorMsg /\s\+$/
-
-
-"Apprently give virtualenv support to YouCompleteMe
-
-"py << EOF
-"import os
-"import sys
-"if 'VIRTUAL_ENV' in os.environ:
-  "project_base_dir = os.environ['VIRTUAL_ENV']
-  "activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-  "execfile(activate_this, dict(__file__=activate_this))
-"EOF
 
 set incsearch
 
@@ -174,8 +184,6 @@ endif
 " To go up one screen
 inoremap <C-U> <C-G>u<C-U>
 
-set t_ut=
-
 " Full path in lightline
 let g:lightline = {
       \ 'component_function': {
@@ -191,3 +199,6 @@ function! LightlineFilename()
   endif
   return expand('%')
 endfunction
+
+" To allow lsp and gitgutter to play nice - up to 2 signs
+set signcolumn=auto:2
