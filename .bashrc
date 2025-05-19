@@ -134,8 +134,11 @@ if ! shopt -oq posix; then
   fi
 fi
 
-. /usr/local/bin/virtualenvwrapper.sh
-
-PATH="$HOME/cmd_line_utils/data-science-at-the-command-line/tools:$PATH"
 PATH="$HOME/.local/bin:$PATH"
 PATH="$PATH:/opt/nvim-linux-x86_64/bin"
+
+
+# Fix ssh forwarding for long running tmux sessions. Used a lot at easypost
+fixssh() {
+ eval $(tmux show-env -s |grep '^SSH_')
+ }

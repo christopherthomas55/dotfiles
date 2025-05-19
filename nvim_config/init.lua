@@ -1,3 +1,7 @@
+-- Runtime path for vimplug
+package.path = package.path .. ';' .. vim.fn.stdpath('config') .. '/autoload/?'
+
+-- Load old vimrc, I have not (and probably won't) convert to lua
 local vimrc = vim.fn.stdpath("config") .. "/vimrc"
 vim.cmd.source(vimrc)
 

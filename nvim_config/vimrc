@@ -2,54 +2,62 @@ set nocompatible
 filetype off
 syntax enable
 
-"Vundle stuff - required for those plugins
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+" Converted from vundle to vim-plug
+" Install vim-plug if we don't already have it
+" THis may not be best practice? What do I know, it works
+if empty(glob('~/.config/nvim/autoload/plug.vim'))
+silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin('~/.vim/plugged')
+
 " ---- General plugins
-"Vundle is what I use for plugins even though I should probably do something more modern
-Plugin 'VundleVim/Vundle.vim'
 "I love nerdtree for moving around files/directories
-Plugin 'scrooloose/nerdtree.git'
+Plug 'preservim/nerdtree'
+"Nerdtree operates on visual selections
+Plug 'PhilRunninger/nerdtree-visual-selection'
 "Vim surround is how I use the "i" to get a word from interior. I don't know
 "what else it does
-Plugin 'tpope/vim-surround'
+Plug 'tpope/vim-surround'
 " This is deprecated and I need to get another syntax checker like ALE (or
 " LSPs?)
-Plugin 'vim-syntastic/syntastic'
+Plug 'vim-syntastic/syntastic'
+" Sane rust defaults
+Plug 'rust-lang/rust.vim'
 
-
-Plugin 'rust-lang/rust.vim'
 " ----- Appearance
 "  Color
-"Plugin 'morhetz/gruvbox' but in neovim!
-Plugin 'ellisonleao/gruvbox.nvim'
+"Plug 'morhetz/gruvbox' but in neovim!
+Plug 'ellisonleao/gruvbox.nvim'
 
 "  Bottom line thing
-Plugin 'itchyny/lightline.vim'
+Plug 'itchyny/lightline.vim'
 
 " ----- Git plugins
 " Git in nerdtree
-Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 " Git in side number things
-Plugin 'airblade/vim-gitgutter'
+Plug 'airblade/vim-gitgutter'
 " Gives access to the :Git command. I like the idea but normally just use tmux. Ha!
-Plugin 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive'
 
-
+" ----- AI plugins
+Plug 'github/copilot.vim'
 
 " ----- Neovim lsp basic configs
-Plugin 'neovim/nvim-lspconfig'
+Plug 'neovim/nvim-lspconfig'
 " Makes lsp colors look better
-Plugin 'folke/lsp-colors.nvim'
+Plug 'folke/lsp-colors.nvim'
 
 " ----- Jupyter plugins
-" Plugin 'szymonmaszke/vimpyter' "Unfortunately is vim 8 only
+" Plug 'szymonmaszke/vimpyter' "Unfortunately is vim 8 only
 
 " ----- Old -----
-" Plugin 'python-mode/python-mode.git'
-" Plugin 'vimwiki/vimwiki'
-call vundle#end()
-call vundle#end()
+" Plug 'python-mode/python-mode.git'
+" Plug 'vimwiki/vimwiki'
+call plug#end()
 
 
 filetype plugin indent on
