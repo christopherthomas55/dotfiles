@@ -26,6 +26,8 @@ Plug 'tpope/vim-surround'
 Plug 'vim-syntastic/syntastic'
 " Sane rust defaults
 Plug 'rust-lang/rust.vim'
+" Fun - lines to show indents
+Plug 'Yggdroot/indentLine'
 
 " ----- Appearance
 "  Color
