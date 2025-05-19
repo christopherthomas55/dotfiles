@@ -211,4 +211,4 @@ function! LightlineFilename()
 endfunction
 
 " To allow lsp and gitgutter to play nice - up to 2 signs
-set signcolumn=auto:2
+set signcolumn=auto:3
