@@ -142,3 +142,8 @@ PATH="$PATH:/opt/nvim-linux-x86_64/bin"
 fixssh() {
  eval $(tmux show-env -s |grep '^SSH_')
  }
+
+rexplain () {
+    rustc --explain E$1 || rust --explain $1
+}
+alias rex=rexplain

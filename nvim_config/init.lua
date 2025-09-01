@@ -32,3 +32,7 @@ vim.diagnostic.config({
     source = "always",  -- Or "if_many"
   },
 })
+
+vim.keymap.set('n', '<C-h>', function()
+  vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+end, { desc = 'Toggle Inlay Hints' })
