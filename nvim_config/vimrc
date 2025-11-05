@@ -29,6 +29,10 @@ Plug 'rust-lang/rust.vim'
 " Fun - lines to show indents
 Plug 'Yggdroot/indentLine'
 
+" Incredibly fast - highlights corresponding fFtT
+Plug 'unblevable/quick-scope'       " Plug
+
+
 " ----- Appearance
 "  Color
 "Plug 'morhetz/gruvbox' but in neovim!
