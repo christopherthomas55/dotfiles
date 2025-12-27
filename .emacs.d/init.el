@@ -5,15 +5,38 @@
 
 ;; Helpful package management
 (require 'use-package)
-;; Help with annoying key issues
+
+;; In emacs < 29 this helps with annoying key issues
 ;;(require 'gnu-elpa-keyring-update)
 
 
-;; Allow bundled packages to upgrade (used for seq package dependencies in Magit)
-;; In this case, you may need to manually update to get magit working
-;; (M-x package-refresh-contents) then (M-x list-packages) then find seq, and press I over it to mark for installation
-;; Then pressing x will execute
+;; Allow bundled packages to upgrade (used for seq package dependencies in Magit), generally useful even after building from source
 (setq package-install-upgrade-built-in t)
+
+;; Tabs are just 4 spaces. I hate tabs!
+(setq indent-tabs-mode nil)
+(setq tab-width 4)
+
+;; Helper fn to load secrets from secret files
+;; Loads from file with lines key=val
+;; TODO - support multiple files
+(defun load-secret (key)
+  (with-temp-buffer
+    (insert-file-contents "~/.secrets")
+    ;;let* evaluates sequentially, not parallel so we can use secrets list
+    (let* (
+	  (secrets-list (split-string (buffer-string) "\n" t)) ; Get each line. 't' omits empty strings
+	  (matching-secret (seq-filter
+					  (lambda (x)  (equal key (car (split-string x "=" t))))
+					  secrets-list)))
+	  ;; Return here
+	  (cadr (split-string (car matching-secret) "="))
+    )
+  )
+)
+
+;; Use ibuffer instead of standard buffer
+(global-set-key (kbd "C-x C-b") 'ibuffer)
 
 ;; Enable Evil MODE
 (use-package evil
@@ -38,8 +61,9 @@
   :ensure t
   )
 
-;; Let's us connect to github
+;; Let's connect magit to github
 (use-package forge
+  :ensure t
   :after magit)
 
 (use-package org
@@ -68,6 +92,8 @@
   (setq org-log-repeat 'time)
   ;; Put these logs into a drawer called :LOGBOOK: (keeps things tidy)
   (setq org-log-into-drawer t)
+  ;; Native org agenda support for logs?
+  (setq org-agenda-start-with-log-mode t)
 
   ;; TODO this can theoretically get slow
   ;; The string search avoids emacs swap files that start with .#
@@ -77,16 +103,17 @@
    (setq org-agenda-files
     (seq-filter (lambda (x) (not (string-search "/.#" x)))
 	(append
-	 (directory-files-recursively "~/writing/" "\\.org$")
+	 (directory-files-recursively "~/writing/" "")
 	 (directory-files-recursively "~/org/" "\\.org$")
+	 ;; Only certain projects for size reasons
+	 (directory-files-recursively "~/projects/" "\\.org$")
 	 )
     )
    )
   )
-
   (org-mode-restart)
-  (reload-org-agenda-files)
-  )
+  (reload-org-agenda-files))
+
 
 ;; EVILLLLLL in org
 (use-package evil-org
@@ -130,7 +157,7 @@
   (setq org-roam-db-location (concat org-roam-directory "roam.sqlite"))
 )
 
-;; Load after startup
+;; Load org-roam db after startup
 ;; TODO - this may have  astartup performance cost
 (org-roam-db-autosync-mode)
 (org-roam-db-sync)
@@ -140,6 +167,38 @@
   :ensure t
   :after org
 )
+
+;; LLM chat interface
+(use-package gptel
+  :ensure t
+  :init
+  ;; Load GEMINI_API_KEY=VAL\n from secrets file
+  (setq gptel-backend (gptel-make-gemini "Gemini" :key (load-secret "GEMINI_API_KEY") :stream t))
+  ;; I wish
+  ;; TODO route to gemma if rate limited
+  (setq gptel-model 'gemini-3-flash-preview)
+  (setq gptel-default-mode 'org-mode)
+
+  (defun gptel-new-session ()
+    "Create a new gptel chat buffer without prompting."
+    (interactive)
+    (let* (
+	   ;; Count existing buffers to generate new buffer name
+	   (existing-count (length (seq-filter (lambda (x) (cl-search "gpt" x)) (mapcar #'buffer-name (buffer-list)))))
+	   (buf (generate-new-buffer (format "*gpt%d*" existing-count)))
+    )
+      (with-current-buffer buf
+	(org-mode)
+	(gptel-mode 1))
+      (pop-to-buffer buf))
+  )
+
+
+  ;; For now C-c g is gpt start
+  (global-set-key (kbd "C-c g") 'gptel-new-session)
+)
+
+;; TODO copilot
 
 ;; w3m
 
@@ -175,6 +234,11 @@
 ;;  :init
 ;;)
 
+;; MY custom things
+;; Right now only wiki
+;; TODO
+;;(add-to-list 'load-path "~/projects/elisp/")
+
 
 
 
@@ -193,8 +257,8 @@
  '(org-enforce-todo-dependencies t)
  '(org-habit-graph-column 60)
  '(package-selected-packages
-   '(evil-collection evil-org f gruvbox-theme magit org-habit-stats
-		     org-roam sqlite3 swiper))
+   '(evil-collection evil-org f forge gptel gruvbox-theme magit
+		     org-habit-stats org-roam sqlite3 swiper))
  '(safe-local-variable-values
    '((vc-default-patch-addressee . "bug-gnu-emacs@gnu.org")
      (vc-prepare-patches-separately)
